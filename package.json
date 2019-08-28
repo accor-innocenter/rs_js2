@@ -9,11 +9,22 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "mqtt": "^2.18.0",
-    "request": "^2.85.0"
+    "hermes-javascript": "^0.3.11",
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/accor-innocenter/rs_js2.git"
-  }
+  },
+  "sandbox": [
+    "fs",
+    "http",
+    "https",
+    "os",
+    "path",
+    "stream",
+    "tty",
+    "url",
+    "util",
+    "zlib"
+  ]
 }
