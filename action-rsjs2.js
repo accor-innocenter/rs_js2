@@ -1,29 +1,24 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
-var mqtt = require('mqtt')
+const { withHermes } = require('hermes-javascript')
 
-var client  = mqtt.connect('mqtt://localhost:1883')
+withHermes((hermes, done) => {
+    try {
+        const dialog = hermes.dialog();
 
-var request = require('request');
+        console.log("we are logged");
 
-client.on('connect', function () {
-  client.subscribe('hermes/intent/AccorInnovationCenter:OrderRS:hello')
-})
+        dialog.flow('AccorInnovationCenter:OrderRS', (message, flow) => {
+            
+            console.log(message);
 
+            flow.end();
+            
+            return "Voici le menu.";
 
-var callback_hello = function(){
-	console.log("*****\nhello");
-}
-
-var lastIntentDetails;
-
-client.on('message', function (topic, message) {
-  // message is Buffer
-  console.log(topic)
-  let intentDetails = JSON.parse(message.toString());
-  console.log(intentDetails);
-  lastIntentDetails = intentDetails;
-
-  return "Voici le menu"
-
+        })
+    } catch (error) {
+        console.error(error.toString());
+        done();
+    }
 })
